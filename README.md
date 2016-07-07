@@ -3,9 +3,9 @@ SmartThings Repo
 
 Roku Manager
 
-Adds Roku Devices EPC with Demo App.
-
-Steps 
+Adds Roku Devices EPC with Demo App.<br>
+<br>
+Steps<br>
 1.) Add RokuDeviceHandler.<br>
 2.) Add RokuConnect.<br>
 <br>
