@@ -6,9 +6,9 @@ Roku Manager
 Adds Roku Devices EPC with Demo App.
 
 Steps 
-1.) Add RokuDeviceHandler.
-2.) Add RokuConnect.
-
+1.) Add RokuDeviceHandler.<br>
+2.) Add RokuConnect.<br>
+<br>
 You will need run the Roku (Connect) app to find devices.
 
 Demo App
