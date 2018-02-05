@@ -305,7 +305,7 @@ private parseActiveApp(body){
 }
 
 /*** rokuLaunchAction
-	Launches the channel identified by appID and if the Application supports contentId it will start the content. 
+	Launches the channel identified by appName and if the Application supports contentId it will start the content. 
     
     Eg Start Youtube Video
     http://<ip address>:8060/launch/837?contentID=aZtNi6QmA1Y
@@ -326,24 +326,44 @@ private rokuLaunchAction(String appName, String contentId =null) {
         def appNode = new XmlSlurper().parseText(channelList).children().find{it.text()==appName}
         if(appNode){
             def appId = appNode.@id
-            def urlText = "/launch/${appId}?contentId=${contentId}"
-            if(!contentId){
-                urlText = "/launch/${appId}"
-            }
-
-            def httpRequest = [
-                method:		"POST",
-                path: 		urlText,
-                headers:	[
-                    HOST: getHostAddress(),
-                    Accept: 	"* /*",
-                ],
-            ]
-
-            def hubAction = new physicalgraph.device.HubAction(httpRequest)
-            sendHubCommand(hubAction)
+            launchAppId(appId, contentId)
         }
     }
+}
+
+/*** launchAppId
+	Launches the channel identified by appID and if the Application supports contentId it will start the content. 
+    
+    Eg Start Youtube Video
+    http://<ip address>:8060/launch/837?contentID=aZtNi6QmA1Y
+    
+    You can follow the appID with a question mark and a list of URL parameters to be sent to the 
+    application as an associative array, and passed to the RunUserInterface() or Main() entry point. 
+    
+    This command is sent using an HTTP POST with no body.
+	
+    The launch command should not be used to implement deep-linking to an uninstalled channel, 
+    because it will fail to launch uninstalled channels. 
+    
+    Use the install command instead for uninstalled channels.
+***/
+def launchAppId(String appId, String contentId =null) {
+    def urlText = "/launch/${appId}?contentId=${contentId}"
+    if(!contentId){
+        urlText = "/launch/${appId}"
+    }
+
+    def httpRequest = [
+        method:		"POST",
+        path: 		urlText,
+        headers:	[
+            HOST: getHostAddress(),
+            Accept: 	"* /*",
+        ],
+    ]
+
+    def hubAction = new physicalgraph.device.HubAction(httpRequest)
+    sendHubCommand(hubAction)
 }
 
 
